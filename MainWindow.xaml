@@ -1,0 +1,170 @@
+﻿<Window x:Class="LagrangeInterpol.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LagrangeInterpol"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Лабораторная работа №4 " Height="410.621" Width="752.073" MinHeight="410" MinWidth="654">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="160"/>
+        </Grid.ColumnDefinitions>
+        <lvc:CartesianChart x:Name="chart" Zoom="X" ScrollMode="X" DisableAnimations="True" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding GlobalCollection}" MouseMove="chart_MouseMove" Grid.Row="0" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis>
+                    <lvc:Axis.Separator>
+                        <lvc:Separator IsEnabled="True"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+        <TextBox x:Name="xTextBox" HorizontalAlignment="Left" KeyDown="XBox_KeyDown" Opacity="0.3" Height="23" Margin="31,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" OpacityMask="White">
+            <TextBox.Text>
+                <Binding Path="From" UpdateSourceTrigger="LostFocus">
+                    <Binding.Converter>
+                        <local:DoubleToStringConverter/>
+                    </Binding.Converter>
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="yTextBox" HorizontalAlignment="Left" KeyDown="XBox_KeyDown" Opacity="0.3" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47" Background="White" OpacityMask="White">
+            <TextBox.Text>
+                <Binding Path="To" UpdateSourceTrigger="LostFocus">
+                    <Binding.Converter>
+                        <local:DoubleToStringConverter/>
+                    </Binding.Converter>
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Label x:Name="label" Content="Считать значения для:" HorizontalAlignment="Right" Margin="0,0,120,24" Grid.Row="1" VerticalAlignment="Bottom" Grid.RowSpan="2" Height="26" Width="133" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="16,0,0,5" Grid.Row="2" TextWrapping="Wrap" Text="X0:" VerticalAlignment="Bottom" Height="16" Width="16"/>
+        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="138,4,0,0" Grid.Row="2" TextWrapping="NoWrap" Text="Y0:" VerticalAlignment="Top" Height="16" Width="16"/>
+        <TextBox x:Name="StartXBox" HorizontalAlignment="Left" Height="19" Margin="35,0,0,4" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="79" GotFocus="XBox_GotFocus" KeyDown="XBox_KeyDown">
+            <TextBox.Text>
+                <Binding Path="X0" Converter="{StaticResource DoubleToString}">
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="StartYBox" HorizontalAlignment="Left" Height="19" Margin="159,2,0,0" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Top" Width="79">
+            <TextBox.Text>
+                <Binding Path="Y0" Converter="{StaticResource DoubleToString}">
+                    <Binding.ValidationRules>
+                        <local:NumberValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Separator HorizontalAlignment="Stretch" Height="6" Grid.Row="1" Margin="0,-6,0,0" Grid.ColumnSpan="2" VerticalAlignment="Top" Grid.RowSpan="1"/>
+        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Right" Margin="0,0,87,4" Grid.Row="1" TextWrapping="Wrap" Text="X:" VerticalAlignment="Bottom" Grid.Column="1" Height="16" Width="10"/>
+        <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Right" Margin="0,4,87,0" Grid.Row="2" TextWrapping="NoWrap" Text="Y:" VerticalAlignment="Top" Grid.Column="1" Height="16" Width="9"/>
+        <TextBox x:Name="XBox" HorizontalAlignment="Right" Height="19" Margin="0,0,2,3" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Bottom" Width="79" GotFocus="XBox_GotFocus" KeyDown="XBox_KeyDown" Grid.Column="1">
+            <Binding Path="X" Converter="{StaticResource DoubleToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBox x:Name="YBox" HorizontalAlignment="Right" Height="19" Margin="0,2,2,0" IsEnabled="False" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Top" Width="79" Grid.Column="1">
+            <Binding Path="Y" Converter="{StaticResource DoubleToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBox x:Name="yDiffKoefBox" HorizontalAlignment="Left" Height="19" Margin="8,3,0,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" Width="25" TextAlignment="Right">
+            <Binding Path="YDiffCoeff" Converter="{StaticResource CoeffToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="37,0,0,6" Grid.Row="1" TextWrapping="Wrap" Text="y` =" VerticalAlignment="Bottom" Height="16" Width="26"/>
+        <TextBox x:Name="xKoefBox" HorizontalAlignment="Left" Height="19" Margin="63,3,0,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" Width="25" TextAlignment="Right">
+            <Binding Path="XCoeff" Converter="{StaticResource CoeffToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="90,0,0,6" Grid.Row="1" TextWrapping="Wrap" Text="x^2 + " VerticalAlignment="Bottom" Height="16" Width="34"/>
+        <TextBox x:Name="yKoefBox" HorizontalAlignment="Left" Height="19" Margin="124,3,0,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" Width="30" TextAlignment="Right">
+            <Binding Path="YCoeff" Converter="{StaticResource CoeffToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="159,0,0,6" Grid.Row="1" TextWrapping="Wrap" Text="y +" VerticalAlignment="Bottom" Height="16" Width="19"/>
+        <TextBox x:Name="lnXKoefBox" HorizontalAlignment="Left" Height="19" Margin="183,3,0,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" Width="25" TextAlignment="Right">
+            <Binding Path="LnCoeff" Converter="{StaticResource CoeffToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="213,0,0,5" Grid.Row="1" TextWrapping="Wrap" Text="ln(x)" VerticalAlignment="Bottom" Height="16" Width="32"/>
+        <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="262,0,0,5" Grid.Row="1" TextWrapping="Wrap" Text="Xконеч" VerticalAlignment="Bottom" Height="16" Width="42"/>
+        <TextBox x:Name="endIntervalBox" HorizontalAlignment="Left" Height="19" Margin="309,3,0,0" Grid.Row="1" TextWrapping="NoWrap" VerticalAlignment="Top" Width="25" TextAlignment="Right">
+            <Binding Path="XEnd" Converter="{StaticResource DoubleToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <TextBlock x:Name="textBlock_Copy8" HorizontalAlignment="Left" Margin="249,0,0,6" Grid.Row="2" TextWrapping="Wrap" Text="Точность:" VerticalAlignment="Bottom" Height="16" Width="55"/>
+        <TextBox x:Name="accuracyBox" HorizontalAlignment="Left" Height="19" Margin="309,2,0,0" Grid.Row="2" TextWrapping="NoWrap" VerticalAlignment="Top" Width="72" TextAlignment="Right">
+            <Binding Path="Accuracy" Converter="{StaticResource DoubleToString}">
+                <Binding.ValidationRules>
+                    <local:NumberValidation/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+        <Button x:Name="setGraphsButton" Content="OK" HorizontalAlignment="Left" Margin="350,3,0,0" Grid.Row="1" Width="31" Click="setGraphsButton_Click" Height="20" VerticalAlignment="Top"/>
+        <DataGrid x:Name="dataGrid" Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Stretch" Width="140" CanUserResizeColumns="False" CanUserReorderColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="X" Width="1*">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="X" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Y" Width="1*">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Y" Mode="TwoWay" UpdateSourceTrigger="LostFocus">
+                            <Binding.Converter>
+                                <local:DoubleToStringConverter/>
+                            </Binding.Converter>
+                            <Binding.ValidationRules>
+                                <local:NumberValidation></local:NumberValidation>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
